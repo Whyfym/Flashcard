@@ -221,6 +221,8 @@ summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:
 .wbox.shake{animation:shake .3s}
 @keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 .wmist{text-align:center;margin:8px 0 0;font-size:13px;color:var(--muted)}
+.wmist.warn{color:var(--danger-text);font-weight:700}
+.wmsg .wwarn{font-weight:700;color:var(--danger-text);font-size:16px}
 .actions.three{grid-template-columns:repeat(3,1fr);gap:8px}
 .actions.three .act{font-size:16px;gap:2px;min-height:64px}
 .actions.three .act small{font-size:12px;text-align:center}
@@ -233,6 +235,21 @@ summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:
 .result.ok .rstat{color:var(--jade)}
 .result.bad .rstat{color:var(--danger-text)}
 @media (prefers-reduced-motion:reduce){.wbox.shake{animation:none}}
+
+/* ---------- top bar & sessions ---------- */
+.study-top{flex-wrap:wrap;margin-bottom:6px}
+.top-actions{display:flex;gap:8px;margin-left:auto}
+.study-top .btn.small{padding:6px 10px;font-size:14px;min-height:40px}
+.study-title{margin:4px 0 12px;font-family:var(--serif);font-size:19px}
+.study-title span{color:var(--red);font-weight:900;margin-left:6px}
+.sess{display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:10px}
+.pill{display:inline-block;font-weight:700;font-size:13px;padding:3px 14px;border-radius:999px}
+.pill.s1{background:var(--gold);color:#2A1D05}
+.pill.s2{background:var(--red);color:#FFF4D6}
+.sinfo{font-size:13px;color:var(--muted);max-width:34ch;line-height:1.35}
+.wnote{text-align:center;margin:10px 0 0;font-size:13px;color:var(--muted)}
+.act:disabled{opacity:.4;cursor:not-allowed}
+.speak-btn:disabled{opacity:.4;cursor:not-allowed}
 
 /* ---------- modal ---------- */
 .ov{position:fixed;inset:0;background:rgba(20,10,8,.6);display:grid;place-items:center;padding:20px;z-index:50}
@@ -362,7 +379,7 @@ var I18N_ADD={
 en:{modeFlash:'Flashcards',modeWrite:'Write hanzi',modeLabel:'Study mode',
  overallLineW:'{d} of {t} words written · {p}%',levelLineW:'{d} of {t} words written · {f} of 15 parts completed',
  sealAriaW:'HSK {lv} part {n}, {d} of {t} written',memorizedOfW:'Written {d} of {t}',
- wPrompt:'Write this word in Chinese',wHint:'Hint',wAnswer:'Answer',wGuide:'Guide',wMistakes:'Mistakes: {m}',
+ wPrompt:'Write this word in Chinese',wHint:'Hint',wAnswer:'Answer',wGuide:'Guide',wMistakes:'Mistakes: {m} / 3',wTooMany:'More than 3 wrong strokes. Go back to the practice session.',wRedo:'Back to practice',wS1:'Session 1 of 2 · Practice',wS2:'Session 2 of 2 · Test',wI1:'Make as many mistakes as you like. A guide appears after every 2 wrong strokes.',wI2:'No guide, hint or answer. Up to 3 wrong strokes allowed.',wS1Done:'Practice complete! Now take the test.',wStartTest:'Start test',wSkipSub:'Go to the test',wLocked:'Hint, answer and skip are disabled during the test.',wMist1:'Mistakes: {m}',leftW:'Left {q}',stWrong:'Wrong strokes',
  wGood:'Well done!',wRepeat:'We will repeat this word later.',wShown:'Answer shown. We will repeat this word later.',
  wNext:'Next',wWatch:'Stroke order',wNoLib:'The writing engine could not be loaded. Check your internet connection and reload the page.',
  wLoadErr:'Could not load stroke data for {c}. Check your connection.',wRetry:'Retry',wSkipChar:'Skip this character',wBox:'Writing area',
@@ -370,7 +387,7 @@ en:{modeFlash:'Flashcards',modeWrite:'Write hanzi',modeLabel:'Study mode',
 id:{modeFlash:'Flashcard',modeWrite:'Menulis hanzi',modeLabel:'Mode belajar',
  overallLineW:'{d} dari {t} kata sudah ditulis · {p}%',levelLineW:'{d} dari {t} kata sudah ditulis · {f} dari 15 part selesai',
  sealAriaW:'HSK {lv} part {n}, {d} dari {t} sudah ditulis',memorizedOfW:'Ditulis {d} dari {t}',
- wPrompt:'Tulis kata ini dalam bahasa Mandarin',wHint:'Petunjuk',wAnswer:'Jawaban',wGuide:'Panduan',wMistakes:'Kesalahan: {m}',
+ wPrompt:'Tulis kata ini dalam bahasa Mandarin',wHint:'Petunjuk',wAnswer:'Jawaban',wGuide:'Panduan',wMistakes:'Kesalahan: {m} / 3',wTooMany:'Lebih dari 3 kali salah gores. Kembali ke sesi latihan.',wRedo:'Kembali berlatih',wS1:'Sesi 1 dari 2 · Latihan',wS2:'Sesi 2 dari 2 · Tes',wI1:'Boleh salah berapa pun. Pemandu goresan muncul setiap 2 kali salah gores.',wI2:'Tanpa pemandu, petunjuk, atau jawaban. Maksimal 3 kali salah gores.',wS1Done:'Latihan selesai! Sekarang masuk ke tes.',wStartTest:'Mulai tes',wSkipSub:'Langsung ke tes',wLocked:'Petunjuk, jawaban, dan Skip tidak bisa dipakai saat tes.',wMist1:'Kesalahan: {m}',leftW:'Sisa {q}',stWrong:'Goresan salah',
  wGood:'Bagus sekali!',wRepeat:'Kata ini akan diulang nanti.',wShown:'Jawaban ditampilkan. Kata ini akan diulang nanti.',
  wNext:'Lanjut',wWatch:'Urutan goresan',wNoLib:'Mesin menulis tidak dapat dimuat. Periksa koneksi internet lalu muat ulang halaman.',
  wLoadErr:'Data goresan untuk {c} tidak dapat dimuat. Periksa koneksi Anda.',wRetry:'Coba lagi',wSkipChar:'Lewati karakter ini',wBox:'Area menulis',
@@ -378,7 +395,7 @@ id:{modeFlash:'Flashcard',modeWrite:'Menulis hanzi',modeLabel:'Mode belajar',
 vi:{modeFlash:'Thẻ ghi nhớ',modeWrite:'Tập viết chữ Hán',modeLabel:'Chế độ học',
  overallLineW:'Đã viết {d}/{t} từ · {p}%',levelLineW:'Đã viết {d}/{t} từ · {f}/15 phần hoàn thành',
  sealAriaW:'HSK {lv} phần {n}, đã viết {d}/{t}',memorizedOfW:'Đã viết {d}/{t}',
- wPrompt:'Hãy viết từ này bằng chữ Hán',wHint:'Gợi ý',wAnswer:'Đáp án',wGuide:'Nét mờ',wMistakes:'Lỗi: {m}',
+ wPrompt:'Hãy viết từ này bằng chữ Hán',wHint:'Gợi ý',wAnswer:'Đáp án',wGuide:'Nét mờ',wMistakes:'Lỗi: {m} / 3',wTooMany:'Sai hơn 3 nét. Quay lại phần luyện tập.',wRedo:'Quay lại luyện tập',wS1:'Phần 1/2 · Luyện tập',wS2:'Phần 2/2 · Kiểm tra',wI1:'Được sai bao nhiêu lần cũng được. Nét hướng dẫn hiện sau mỗi 2 lần viết sai nét.',wI2:'Không có nét hướng dẫn, gợi ý hay đáp án. Tối đa 3 lần sai nét.',wS1Done:'Luyện tập xong! Giờ hãy làm bài kiểm tra.',wStartTest:'Bắt đầu kiểm tra',wSkipSub:'Sang phần kiểm tra',wLocked:'Không thể dùng Gợi ý, Đáp án và Skip trong phần kiểm tra.',wMist1:'Lỗi: {m}',leftW:'Còn {q}',stWrong:'Nét sai',
  wGood:'Làm tốt lắm!',wRepeat:'Từ này sẽ được lặp lại sau.',wShown:'Đã hiện đáp án. Từ này sẽ được lặp lại sau.',
  wNext:'Tiếp',wWatch:'Thứ tự nét',wNoLib:'Không tải được bộ máy viết chữ. Hãy kiểm tra kết nối internet và tải lại trang.',
  wLoadErr:'Không tải được dữ liệu nét của {c}. Hãy kiểm tra kết nối.',wRetry:'Thử lại',wSkipChar:'Bỏ qua chữ này',wBox:'Khung viết',
@@ -386,7 +403,7 @@ vi:{modeFlash:'Thẻ ghi nhớ',modeWrite:'Tập viết chữ Hán',modeLabel:'C
 ru:{modeFlash:'Карточки',modeWrite:'Письмо иероглифов',modeLabel:'Режим обучения',
  overallLineW:'Написано {d} из {t} слов · {p}%',levelLineW:'Написано {d} из {t} слов · завершено частей: {f} из 15',
  sealAriaW:'HSK {lv}, часть {n}: написано {d} из {t}',memorizedOfW:'Написано {d} из {t}',
- wPrompt:'Напишите это слово по-китайски',wHint:'Подсказка',wAnswer:'Ответ',wGuide:'Контур',wMistakes:'Ошибок: {m}',
+ wPrompt:'Напишите это слово по-китайски',wHint:'Подсказка',wAnswer:'Ответ',wGuide:'Контур',wMistakes:'Ошибок: {m} / 3',wTooMany:'Больше 3 неверных черт. Возврат к тренировке.',wRedo:'Вернуться к тренировке',wS1:'Этап 1 из 2 · Тренировка',wS2:'Этап 2 из 2 · Проверка',wI1:'Ошибаться можно сколько угодно. После каждых 2 неверных черт появляется подсказка.',wI2:'Без контура, подсказки и ответа. Не более 3 неверных черт.',wS1Done:'Тренировка завершена! Теперь проверка.',wStartTest:'Начать проверку',wSkipSub:'К проверке',wLocked:'Подсказка, ответ и пропуск недоступны во время проверки.',wMist1:'Ошибок: {m}',leftW:'Осталось {q}',stWrong:'Неверных черт',
  wGood:'Отлично!',wRepeat:'Это слово мы повторим позже.',wShown:'Ответ показан. Это слово мы повторим позже.',
  wNext:'Далее',wWatch:'Порядок черт',wNoLib:'Не удалось загрузить модуль письма. Проверьте подключение к интернету и перезагрузите страницу.',
  wLoadErr:'Не удалось загрузить данные черт для {c}. Проверьте подключение.',wRetry:'Повторить',wSkipChar:'Пропустить иероглиф',wBox:'Поле для письма',
@@ -477,7 +494,7 @@ function logout(){
 /* ================= PART LOGIC ================= */
 var V={name:'login',mode:'login',regLang:'en'}, HIST=[], flipped=false, lastName='', MODE='flash', W=null;
 function pkey(lv,i){return lv+'-'+i;}
-function freshPart(lv,i,n){var q=PARTS[lv][i].slice();return {q:q,d:[],k:{},r:1,rl:q.length,s:0,f:0,n:n||0,a:0};}
+function freshPart(lv,i,n){var q=PARTS[lv][i].slice();return {q:q,d:[],k:{},r:1,rl:q.length,s:0,f:0,n:n||0,a:0,w:0};}
 function store(){if(MODE==='write'){S.wparts=S.wparts||{};return S.wparts;}return S.parts;}
 function getPart(lv,i){var st=store(),k=pkey(lv,i);if(!st[k])st[k]=freshPart(lv,i);return st[k];}
 function partDone(lv,i){var p=store()[pkey(lv,i)];return p?p.d.length:0;}
@@ -561,6 +578,12 @@ var ICON={
 };
 
 /* ================= RENDER ================= */
+function topBar(){
+  return '<div class="study-top"><button class="btn ghost small" data-a="home">'+ICON.back+' '+esc(T('partList'))+'</button>'
+   +'<span class="top-actions"><button class="btn ghost small" data-a="undo"'+(HIST.length?'':' disabled')+'>'+ICON.undo+' '+esc(T('back'))+'</button>'
+   +'<button class="btn ghost small" data-a="askreset">'+ICON.reset+' '+esc(T('reset'))+'</button></span></div>'
+   +'<h2 class="study-title">'+esc(T('studyTitle',{lv:V.lv,n:V.part+1}))+'<span aria-hidden="true">'+NUM[V.part]+'</span></h2>';
+}
 var app=document.getElementById('app');
 function render(animate){
   var n=V.name;
@@ -572,7 +595,7 @@ function render(animate){
   if(V.name!==lastName)window.scrollTo(0,0);
   lastName=V.name;
   if(V.name==='study'&&animate){var c=document.getElementById('card');if(c&&c.focus)c.focus({preventScroll:true});}
-  if(V.name==='write'&&W&&!W.done)startChar();
+  if(V.name==='write'&&W&&!W.done){if(W.locked){setMsg('redo');}else if(!W.s1done)startChar();}
 }
 
 function renderLogin(){
@@ -653,8 +676,7 @@ function renderStudy(animate){
   var kc=p.k[id]||0, pos=posText(w);
   app.innerHTML=
   '<main class="study">'
-  +'<div class="study-top"><button class="btn ghost small" data-a="home">'+ICON.back+' '+esc(T('partList'))+'</button>'
-  +'<h2>'+esc(T('studyTitle',{lv:V.lv,n:V.part+1}))+'<span aria-hidden="true">'+NUM[V.part]+'</span></h2></div>'
+  +topBar()
   +'<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+p.d.length+'"><i style="width:'+pct(p.d.length,total)+'%"></i></div>'
   +'<p class="meter-txt" aria-live="polite"><span>'+esc(T('memorizedOf',{d:p.d.length,t:total}))+'</span><span>'+esc(T('leftRound',{q:p.q.length,r:p.r}))+'</span></p>'
   +'<div class="tools"><span class="keepbadge'+(kc?'':' off')+'">'+(kc?esc(T('keptBadge',{k:kc})):'')+'</span>'
@@ -668,8 +690,6 @@ function renderStudy(animate){
   +'</span></button></div>'
   +'<div class="actions"><button class="act keep" data-a="keep">'+esc(T('keep'))+'<small>'+esc(T('keepSub'))+'</small></button>'
   +'<button class="act skip" data-a="skip">'+esc(T('skip'))+'<small>'+esc(T('skipSub'))+'</small></button></div>'
-  +'<div class="sub-actions"><button class="btn ghost" data-a="undo"'+(HIST.length?'':' disabled')+'>'+ICON.undo+' '+esc(T('back'))+'</button>'
-  +'<button class="btn ghost" data-a="askreset">'+ICON.reset+' '+esc(T('reset'))+'</button></div>'
   +'<p class="keys">'+esc(T('shortcuts'))+'</p>'
   +'</main>';
 }
@@ -685,7 +705,7 @@ function renderSummary(){
    +'<h2>'+esc(T('sumTitle',{lv:lv,n:i+1}))+'</h2><p class="when">'+esc(T('doneOn',{when:when}))+'</p>'
    +'<div class="stats">'
    +'<div class="stat"><b>'+total+'</b><span>'+esc(T('stTotal'))+'</span></div>'
-   +'<div class="stat"><b>'+p.r+'</b><span>'+esc(T('stRounds'))+'</span></div>'
+   +(MODE==='write'?'<div class="stat"><b>'+(p.w||0)+'</b><span>'+esc(T('stWrong'))+'</span></div>':'<div class="stat"><b>'+p.r+'</b><span>'+esc(T('stRounds'))+'</span></div>')
    +'<div class="stat"><b>'+p.a+'</b><span>'+esc(T(MODE==='write'?'stKeptW':'stKept'))+'</span></div>'
    +'<div class="stat"><b>'+(total-kept.length)+'</b><span>'+esc(T(MODE==='write'?'stFirstW':'stFirst'))+'</span></div></div>';
   if(kept.length){
@@ -728,6 +748,7 @@ function charLoader(ch,onLoad,onError){
     });
   }).catch(function(e){onError(e);});
 }
+var MAXMIST=3, GUIDE_EVERY=2;
 var prefetched={};
 function prefetchPart(){
   var key=V.lv+'-'+V.part;if(prefetched[key])return;prefetched[key]=1;
@@ -741,18 +762,33 @@ function killWriter(){
   if(W){W.gen++;if(W.writer){try{W.writer.cancelQuiz();}catch(e){}}}
   W=null;
 }
+/* session 1 = practice (unlimited mistakes, guide every 2 wrong strokes); session 2 = test (no help, max 3 wrong strokes) */
 function loadWord(id,w){
-  W={id:id,chars:Array.from(w[1]),idx:0,mist:0,hints:0,revealed:false,done:false,ok:false,busy:false,writer:null,gen:0,
-     outline:!!(S.ui&&S.ui.outline),qopts:null};
+  W={id:id,chars:Array.from(w[1]),session:1,idx:0,mist:0,locked:false,s1done:false,revealed:false,done:false,busy:false,
+     writer:null,gen:0,outline:!!(S.ui&&S.ui.outline),qopts:null};
 }
 function tilesHtml(){
   return W.chars.map(function(c,i){
-    var shown=W.done||i<W.idx;
+    var shown=W.done||(W.session===1?(W.revealed||W.s1done||i<W.idx):i<W.idx);
     return '<span class="tile'+(shown?' done':(i===W.idx?' cur':''))+'">'+(shown?esc(c):'')+'</span>';
   }).join('');
 }
 function updTiles(){var el=document.getElementById('wtiles');if(el&&W)el.innerHTML=tilesHtml();}
-function updMist(){var el=document.getElementById('wmist');if(el&&W)el.textContent=T('wMistakes',{m:W.mist});}
+function updMist(){
+  var el=document.getElementById('wmist');if(!el||!W)return;
+  el.textContent=W.session===2?T('wMistakes',{m:Math.min(W.mist,MAXMIST+1)}):T('wMist1',{m:W.mist});
+  el.classList.toggle('warn',W.session===2&&W.mist>=MAXMIST);
+}
+function updKeep(){
+  var el=document.getElementById('wkeep');if(!el||!W)return;
+  var kc=getPart(V.lv,V.part).k[W.id]||0;
+  el.textContent=kc?T('keptBadge',{k:kc}):'';
+  el.classList.toggle('off',!kc);
+}
+function sessHtml(){
+  var n=W.session;
+  return '<span class="pill s'+n+'">'+esc(T('wS'+n))+'</span><span class="sinfo">'+esc(T('wI'+n))+'</span>';
+}
 function shake(){
   var b=document.getElementById('wbox');if(!b)return;
   b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');
@@ -761,76 +797,131 @@ function setMsg(kind,ch){
   var el=document.getElementById('wmsg');if(!el)return;
   if(!kind){el.innerHTML='';el.classList.remove('on');return;}
   if(kind==='lib'){el.innerHTML='<p>'+esc(T('wNoLib'))+'</p>';}
+  else if(kind==='redo'){el.innerHTML='<p class="wwarn">'+esc(T('wTooMany'))+'</p><button class="btn" data-a="wredo">'+esc(T('wRedo'))+'</button>';}
   else{el.innerHTML='<p>'+esc(T('wLoadErr',{c:ch}))+'</p><div class="row-btns"><button class="btn small" data-a="wretry">'+esc(T('wRetry'))+'</button>'
     +'<button class="btn ghost small" data-a="wskipchar">'+esc(T('wSkipChar'))+'</button></div>';}
   el.classList.add('on');
+}
+function actionsS1(){
+  return '<div class="actions three"><button class="act keep" data-a="hint">'+ICON.bulb+'<span>'+esc(T('wHint'))+'</span></button>'
+   +'<button class="act keep" data-a="answer">'+ICON.eye+'<span>'+esc(T('wAnswer'))+'</span></button>'
+   +'<button class="act skip" data-a="wskip">'+esc(T('skip'))+'<small>'+esc(T('wSkipSub'))+'</small></button></div>';
+}
+function actionsS2(){
+  return '<div class="actions three"><button class="act keep" disabled aria-disabled="true">'+ICON.bulb+'<span>'+esc(T('wHint'))+'</span></button>'
+   +'<button class="act keep" disabled aria-disabled="true">'+ICON.eye+'<span>'+esc(T('wAnswer'))+'</span></button>'
+   +'<button class="act skip" disabled aria-disabled="true">'+esc(T('skip'))+'</button></div>'
+   +'<p class="wnote">'+esc(T('wLocked'))+'</p>';
+}
+function s1DoneHtml(){
+  return '<div class="result ok"><p class="rstat">'+esc(T('wS1Done'))+'</p></div>'
+   +'<div class="actions"><button class="act keep" data-a="watch">'+ICON.play+' '+esc(T('wWatch'))+'</button>'
+   +'<button class="act skip" data-a="starttest">'+esc(T('wStartTest'))+'</button></div>';
+}
+function resultHtml(){
+  return '<div class="result ok"><p class="rstat">'+esc(T('wGood'))+'</p></div>'
+   +'<div class="actions"><button class="act keep" data-a="watch">'+ICON.play+' '+esc(T('wWatch'))+'</button>'
+   +'<button class="act skip" data-a="wnext">'+esc(T('wNext'))+'</button></div>';
+}
+function actionsNow(){
+  if(W.done)return resultHtml();
+  if(W.session===1&&W.s1done)return s1DoneHtml();
+  return W.session===1?actionsS1():actionsS2();
+}
+function refreshUI(){
+  if(!W)return;
+  var e=document.getElementById('wsess');if(e)e.innerHTML=sessHtml();
+  e=document.getElementById('wactions');if(e)e.innerHTML=actionsNow();
+  e=document.getElementById('wguide');if(e){e.disabled=(W.session===2);e.setAttribute('aria-pressed',String(W.outline));}
+  updTiles();updMist();updKeep();
 }
 function startChar(){
   var box=document.getElementById('wtarget');if(!box||!W||W.done)return;
   box.innerHTML='';setMsg('');
   if(!window.HanziWriter){setMsg('lib');return;}
-  var g=++W.gen,ch=W.chars[W.idx];
+  var g=++W.gen,ch=W.chars[W.idx],learn=W.session===1;
+  var showOut=learn&&(W.outline||W.revealed);
   var size=Math.max(200,Math.round(box.clientWidth||280));
   try{
     W.writer=HanziWriter.create(box,ch,{
       width:size,height:size,padding:Math.round(size*.06),
-      showCharacter:false,showOutline:W.outline,
+      showCharacter:false,showOutline:showOut,
       strokeColor:cssv('--ink')||'#211B16',outlineColor:cssv('--line')||'#D8C69C',
       drawingColor:cssv('--red')||'#B3201B',highlightColor:cssv('--gold')||'#C99A2E',
-      drawingWidth:Math.max(5,Math.round(size/38)),strokeAnimationSpeed:1.3,delayBetweenStrokes:160,
+      drawingWidth:Math.max(5,Math.round(size/38)),strokeAnimationSpeed:1.3,strokeHighlightSpeed:1.4,delayBetweenStrokes:160,
       charDataLoader:charLoader,
       onLoadCharDataError:function(){if(W&&g===W.gen)setMsg('data',ch);}
     });
   }catch(e){setMsg('lib');return;}
-  W.qopts={leniency:1.1,showHintAfterMisses:3,highlightOnComplete:true,
-    onMistake:function(){if(!W||g!==W.gen)return;W.mist++;updMist();shake();},
-    onComplete:function(){if(!W||g!==W.gen)return;charDone();}};
+  W.qopts={leniency:1.1,showHintAfterMisses:false,highlightOnComplete:true,
+    onMistake:function(d){
+      if(!W||g!==W.gen||W.locked)return;
+      W.mist++;
+      var p=getPart(V.lv,V.part);p.w=(p.w||0)+1;
+      updMist();shake();
+      if(W.session===1){
+        if(W.mist%GUIDE_EVERY===0&&d&&typeof d.strokeNum==='number'){try{W.writer.highlightStroke(d.strokeNum);}catch(e){}}
+      }else if(W.mist>MAXMIST){tooMany();}
+    },
+    onComplete:function(){if(!W||g!==W.gen||W.locked)return;charDone();}};
   W.writer.quiz(W.qopts);
-  if(W.outline){try{W.writer.showOutline();}catch(e){}}
+  if(showOut){try{W.writer.showOutline();}catch(e){}}
+  else{try{W.writer.hideOutline({duration:0});}catch(e){}}
 }
 function charDone(){
   if(!W)return;
   if(W.idx<W.chars.length-1){
     W.idx++;updTiles();
     var g=W.gen;
-    setTimeout(function(){if(W&&!W.done&&W.gen===g)startChar();},450);
-  }else finishWord(false);
+    setTimeout(function(){if(W&&!W.done&&W.gen===g&&!W.locked)startChar();},450);
+  }else if(W.session===1)finishPractice();
+  else finishTest();
 }
-function finishWord(revealed){
-  if(!W||W.done)return;
-  W.done=true;W.revealed=!!revealed;
-  W.ok=!revealed&&W.hints===0&&W.mist<=Math.max(2,W.chars.length);
-  W.busy=false;
-  if(revealed&&W.writer){try{W.writer.cancelQuiz();W.writer.showCharacter();}catch(e){}}
-  setMsg('');updTiles();
-  var el=document.getElementById('wactions');if(el)el.innerHTML=resultHtml();
+function finishPractice(){
+  W.s1done=true;W.busy=false;setMsg('');refreshUI();
 }
-function resultHtml(){
-  var msg=W.ok?T('wGood'):(W.revealed?T('wShown'):T('wRepeat'));
-  return '<div class="result '+(W.ok?'ok':'bad')+'"><p class="rstat">'+esc(msg)+'</p></div>'
-   +'<div class="actions"><button class="act keep" data-a="watch">'+ICON.play+' '+esc(T('wWatch'))+'</button>'
-   +'<button class="act skip" data-a="wnext">'+esc(T('wNext'))+'</button></div>';
+function startTest(){
+  if(!W||W.done||W.session!==1)return;
+  W.gen++;if(W.writer){try{W.writer.cancelQuiz();}catch(e){}}
+  W.session=2;W.idx=0;W.mist=0;W.locked=false;W.revealed=false;W.s1done=false;W.busy=false;
+  refreshUI();startChar();
 }
-function actionsHtml(){
-  return '<div class="actions three"><button class="act keep" data-a="hint">'+ICON.bulb+'<span>'+esc(T('wHint'))+'</span></button>'
-   +'<button class="act keep" data-a="answer">'+ICON.eye+'<span>'+esc(T('wAnswer'))+'</span></button>'
-   +'<button class="act skip" data-a="skip">'+esc(T('skip'))+'<small>'+esc(T('skipSubW'))+'</small></button></div>';
+function finishTest(){
+  W.done=true;W.busy=false;setMsg('');refreshUI();
+}
+function tooMany(){
+  if(!W||W.done||W.session!==2)return;
+  W.locked=true;W.gen++;
+  try{W.writer.cancelQuiz();}catch(e){}
+  var p=getPart(V.lv,V.part);
+  p.k[W.id]=(p.k[W.id]||0)+1;p.a++;persist();updKeep();
+  setMsg('redo');
+}
+function backToPractice(){
+  if(!W||W.done||!W.locked)return;
+  W.session=1;W.locked=false;W.idx=0;W.mist=0;W.revealed=false;W.s1done=false;W.busy=false;
+  setMsg('');refreshUI();startChar();
 }
 function doHint(){
-  if(!W||W.done||W.busy||!W.writer)return;
-  W.hints++;W.busy=true;
+  if(!W||W.done||W.busy||W.session!==1||!W.writer||W.s1done)return;
+  W.busy=true;
   try{W.writer.cancelQuiz();}catch(e){}
   var g=W.gen;
   try{
     W.writer.animateCharacter({onComplete:function(){
       if(!W||g!==W.gen||W.done)return;
       W.busy=false;
-      try{W.writer.quiz(W.qopts);if(W.outline)W.writer.showOutline();}catch(e){}
+      try{W.writer.quiz(W.qopts);if(W.outline||W.revealed)W.writer.showOutline();else W.writer.hideOutline({duration:0});}catch(e){}
     }});
   }catch(e){W.busy=false;}
 }
+function doAnswer(){
+  if(!W||W.done||W.session!==1||W.s1done)return;
+  W.revealed=true;updTiles();
+  if(W.writer){try{W.writer.showOutline();}catch(e){}}
+}
 function watchAll(){
-  if(!W||!W.writer||W.busy)return;
+  if(!W||!W.writer||W.busy||!(W.done||W.s1done))return;
   W.busy=true;var i=0,g=W.gen;
   (function step(){
     if(!W||g!==W.gen)return;
@@ -840,10 +931,10 @@ function watchAll(){
   })();
 }
 function toggleGuide(){
-  if(!W)return;
+  if(!W||W.session!==1)return;
   W.outline=!W.outline;S.ui=S.ui||{};S.ui.outline=W.outline;persist();
   var b=document.getElementById('wguide');if(b)b.setAttribute('aria-pressed',String(W.outline));
-  if(W.writer){try{W.outline?W.writer.showOutline():W.writer.hideOutline();}catch(e){}}
+  if(W.writer&&!W.s1done){try{(W.outline||W.revealed)?W.writer.showOutline():W.writer.hideOutline();}catch(e){}}
 }
 function renderWrite(){
   var p=getPart(V.lv,V.part);
@@ -854,23 +945,21 @@ function renderWrite(){
   prefetchPart();
   app.innerHTML=
   '<main class="study write">'
-  +'<div class="study-top"><button class="btn ghost small" data-a="home">'+ICON.back+' '+esc(T('partList'))+'</button>'
-  +'<h2>'+esc(T('studyTitle',{lv:V.lv,n:V.part+1}))+'<span aria-hidden="true">'+NUM[V.part]+'</span></h2></div>'
+  +topBar()
   +'<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+p.d.length+'"><i style="width:'+pct(p.d.length,total)+'%"></i></div>'
-  +'<p class="meter-txt" aria-live="polite"><span>'+esc(T('memorizedOfW',{d:p.d.length,t:total}))+'</span><span>'+esc(T('leftRound',{q:p.q.length,r:p.r}))+'</span></p>'
-  +'<div class="tools"><span class="keepbadge'+(kc?'':' off')+'">'+(kc?esc(T('keptBadge',{k:kc})):'')+'</span><span class="tool-btns">'
-  +'<button class="speak-btn" id="wguide" type="button" data-a="guide" aria-pressed="'+W.outline+'">'+esc(T('wGuide'))+'</button>'
+  +'<p class="meter-txt" aria-live="polite"><span>'+esc(T('memorizedOfW',{d:p.d.length,t:total}))+'</span><span>'+esc(T('leftW',{q:p.q.length}))+'</span></p>'
+  +'<div class="tools"><span class="keepbadge'+(kc?'':' off')+'" id="wkeep">'+(kc?esc(T('keptBadge',{k:kc})):'')+'</span><span class="tool-btns">'
+  +'<button class="speak-btn" id="wguide" type="button" data-a="guide" aria-pressed="'+W.outline+'"'+(W.session===2?' disabled':'')+'>'+esc(T('wGuide'))+'</button>'
   +'<button class="speak-btn" type="button" data-a="speak" aria-label="'+esc(T('listen'))+'">'+ICON.speaker+'<span>'+esc(T('listen'))+'</span></button></span></div>'
-  +'<section class="prompt"><p class="plabel">'+esc(T('wPrompt'))+'</p><p class="ppy">'+esc(w[2])+'</p>'
+  +'<section class="prompt"><div class="sess" id="wsess">'+sessHtml()+'</div><p class="plabel">'+esc(T('wPrompt'))+'</p><p class="ppy">'+esc(w[2])+'</p>'
   +(pos?'<p class="ppos">'+esc(pos)+'</p>':'')+'<p class="pmean">'+esc(meaning(w))+'</p>'
   +'<div class="tiles" id="wtiles">'+tilesHtml()+'</div></section>'
   +'<div class="wbox" id="wbox"><svg class="wgrid" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 0V100M0 50H100M0 0L100 100M100 0L0 100"/></svg>'
   +'<div id="wtarget" role="img" aria-label="'+esc(T('wBox'))+'"></div><div class="wmsg" id="wmsg" role="alert"></div></div>'
-  +'<p class="wmist" id="wmist" aria-live="polite">'+esc(T('wMistakes',{m:W.mist}))+'</p>'
-  +'<div id="wactions">'+(W.done?resultHtml():actionsHtml())+'</div>'
-  +'<div class="sub-actions"><button class="btn ghost" data-a="undo"'+(HIST.length?'':' disabled')+'>'+ICON.undo+' '+esc(T('back'))+'</button>'
-  +'<button class="btn ghost" data-a="askreset">'+ICON.reset+' '+esc(T('reset'))+'</button></div>'
+  +'<p class="wmist" id="wmist" aria-live="polite"></p>'
+  +'<div id="wactions">'+actionsNow()+'</div>'
   +'</main>';
+  updMist();
 }
 
 /* ================= MODAL ================= */
@@ -923,11 +1012,14 @@ document.addEventListener('click',function(e){
     case 'setlang':S.lang=t.getAttribute('data-l');setLang(S.lang);persist();closeModal();render();break;
     case 'setmode':MODE=t.getAttribute('data-mode')==='write'?'write':'flash';S.ui=S.ui||{};S.ui.mode=MODE;persist();renderHome();break;
     case 'hint':doHint();break;
-    case 'answer':finishWord(true);break;
+    case 'answer':doAnswer();break;
+    case 'wskip':startTest();break;
+    case 'starttest':startTest();break;
     case 'guide':toggleGuide();break;
     case 'watch':watchAll();break;
-    case 'wnext':if(W&&W.done)act(W.ok?'s':'k');break;
+    case 'wnext':if(W&&W.done)act('s');break;
     case 'wretry':startChar();break;
+    case 'wredo':backToPractice();break;
     case 'wskipchar':charDone();break;
     case 'lv':V.lv=+t.getAttribute('data-lv');S.ui=S.ui||{};S.ui.lv=V.lv;lsSet('mfy:data:'+USER.lower,JSON.stringify(S));renderHome();break;
     case 'open':V.part=+t.getAttribute('data-i');HIST=[];flipped=false;
@@ -949,7 +1041,7 @@ document.addEventListener('change',function(e){
 });
 document.addEventListener('keydown',function(e){
   if(e.key==='Enter'&&V.name==='login'&&e.target&&e.target.tagName==='INPUT'&&e.target.type!=='checkbox'){e.preventDefault();submitAuth();return;}
-  if(V.name==='write'&&W&&W.done&&e.key==='Enter'&&!modalRoot.firstChild&&e.target&&e.target.tagName!=='BUTTON'){e.preventDefault();act(W.ok?'s':'k');return;}
+  if(V.name==='write'&&W&&W.done&&e.key==='Enter'&&!modalRoot.firstChild&&e.target&&e.target.tagName!=='BUTTON'){e.preventDefault();act('s');return;}
   if(V.name!=='study'||modalRoot.firstChild)return;
   var tag=e.target&&e.target.tagName;
   if(tag==='SELECT'||tag==='INPUT')return;
